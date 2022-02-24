@@ -147,7 +147,7 @@ public class MyApp {
         System.out.println("Crearemos un archivo que contendra el resultado de las siguientes operaciones:");
         System.out.println("1. Introducir un TXT a ser copiado dentro del archivo");
         System.out.println("2. Ingresara 5 numeros a ser guardados en una lista y de los cuales se enviaran al archivo los NUMEROS PARES");
-        System.out.println("3. Ingresara 3 palabras que seran guardadas en el sentido inverso en el archivo");
+        System.out.println("3. Ingresara 3 datos a ser guardados en el archivo de manera KEY - VALUE. Ej: 'Nombre: Tomas'");
 
 
         System.out.println("");
@@ -171,7 +171,6 @@ public class MyApp {
             num = numbersScanner.nextInt();
             myNumbers.add(num);
         }
-        numbersScanner.close();
         for(Integer currentNum : myNumbers){
             if((currentNum % 2) == 0){
                 myFinalList.add(currentNum);
@@ -179,7 +178,19 @@ public class MyApp {
         }
         String myFinalListString = myFinalList.toString();
 
-        createFinalFile(myFilePath, myFileDestination, myFinalListString);
+        System.out.println("4) Ingrese Datos en modo KEY - VALUE. Ej: 'Nombre: Tomas'.");
+        HashMap<String, String> myMap = new HashMap<>();
+        Scanner hashScanner = new Scanner(System.in);
+        for(int i=0; i<3 ; i++){
+            System.out.println("Ingrese KEY: ");
+            String myKey = hashScanner.next();
+            System.out.println("Ingrese VALUE: ");
+            String myValue = hashScanner.next();
+            myMap.put(myKey,myValue);
+        }
+        String myFinalHashMap = myMap.toString();
+
+        createFinalFile(myFilePath, myFileDestination, myFinalListString,myFinalHashMap);
         System.out.println("");
         System.out.println("Encontrara el archivo final en el Main Directory de este proyecto");
         System.out.println("Bajo el nombre de: " + myFileDestination );
@@ -227,7 +238,7 @@ public class MyApp {
 
 //    EJ 9 MY APP:
 
-    public static void createFinalFile(String fileIn, String fileOut, String oddList){
+    public static void createFinalFile(String fileIn, String fileOut, String oddList, String hashMap){
         try{
             InputStream myFilePath = new FileInputStream(fileIn);
             try{
@@ -237,8 +248,14 @@ public class MyApp {
                 PrintStream finalFile = new PrintStream(fileOut);
                 System.out.println("");
                 System.out.println("Generando archivo, por favor espere...");
+                finalFile.print("Datos del Archivo Original: ");
                 finalFile.write(datos);
+                finalFile.write(10);
+                finalFile.print("Lista de numeros pares: ");
                 finalFile.print(oddList);
+                finalFile.write(10);
+                finalFile.print("HashMap de KEY-VALUE:");
+                finalFile.print(hashMap);
                 finalFile.close();
             }catch (IOException e){
                 System.out.println("File Not Found Exception: " + e.getMessage());
