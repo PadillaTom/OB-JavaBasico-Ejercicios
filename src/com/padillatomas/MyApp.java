@@ -2,9 +2,7 @@ package com.padillatomas;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.*;
 
 public class MyApp {
     public static void main(String[] args) {
@@ -113,24 +111,83 @@ public class MyApp {
         System.out.println(" ");
         System.out.println("=== 7 ===");
 
-// ===== DESCOMENTAR PARA SU FUNCIONAMIENTO ===
+        System.out.println("DESCOMENTAR PARA SU FUNCIONAMIENTO");
+
+        // ==============================================
+        // ===== DESCOMENTAR PARA SU FUNCIONAMIENTO =====
+        // ==============================================
 //        System.out.println(dividePorCero(0));
 
 //        Ej: 8
         System.out.println(" ");
         System.out.println("=== 8 ===");
-
         // FILE IN  (mac) ->  "/Users/padillatom/Desktop/testio/myFile.txt"
         // FILE OUT -> "destino.txt"
-        copyFiles("/Users/padillatom/Desktop/testio/myFile.txt", "destino.txt" );
+
+        System.out.println("DESCOMENTAR PARA SU FUNCIONAMIENTO");
+
+        // ==============================================
+        // ===== DESCOMENTAR PARA SU FUNCIONAMIENTO =====
+        // ==============================================
+//        copyFiles("/Users/padillatom/Desktop/testio/myFile.txt", "destino.txt" );
+
+
 //        Ej: 9
         System.out.println(" ");
         System.out.println("=== 9 ===");
 
+        // ==================
+        // ===== MY APP =====
+        // ==================
+
+        System.out.println("==================");
+        System.out.println("Bienvenidos");
+        System.out.println("==================");
+        System.out.println(" ");
+        System.out.println("Crearemos un archivo que contendra el resultado de las siguientes operaciones:");
+        System.out.println("1. Introducir un TXT a ser copiado dentro del archivo");
+        System.out.println("2. Ingresara 5 numeros a ser guardados en una lista y de los cuales se enviaran al archivo los NUMEROS PARES");
+        System.out.println("3. Ingresara 3 palabras que seran guardadas en el sentido inverso en el archivo");
 
 
+        System.out.println("");
+        System.out.println("Comenzamos...");
+        System.out.println("");
+        System.out.println("1) Ingrese la ruta del archivo a copiar, recomendado un TXT");
+        Scanner fileScanner = new Scanner(System.in);
+        String myFilePath = fileScanner.next();
+
+        System.out.println("2) Ingrese el nombre del Archivo a generar. Ejemplo: 'ArchivoFinal.txt' ");
+        Scanner finalFileScanner = new Scanner(System.in);
+        String myFileDestination = finalFileScanner.next();
+
+        System.out.println("3) Ingrese 5 numeros enteros, de los cuales  solo quedaran guardados los NUMEROS PARES ");
+        Scanner numbersScanner = new Scanner(System.in);
+        ArrayList<Integer> myNumbers = new ArrayList<>();
+        ArrayList<Integer> myFinalList = new ArrayList<>();
+        int num;
+        for(int i = 0 ; i < 5; i++) {
+            System.out.println("Ingrese Numero:");
+            num = numbersScanner.nextInt();
+            myNumbers.add(num);
+        }
+        numbersScanner.close();
+        for(Integer currentNum : myNumbers){
+            if((currentNum % 2) == 0){
+                myFinalList.add(currentNum);
+            }
+        }
+        String myFinalListString = myFinalList.toString();
+
+        createFinalFile(myFilePath, myFileDestination, myFinalListString);
+        System.out.println("");
+        System.out.println("Encontrara el archivo final en el Main Directory de este proyecto");
+        System.out.println("Bajo el nombre de: " + myFileDestination );
+        System.out.println("Gracias!!!");
+        System.out.println("");
 
     }
+
 //    EJ 7 Exception:
     public static int dividePorCero(int myNumber) throws ArithmeticException{
         int resultado;
@@ -167,4 +224,29 @@ public class MyApp {
         }
         System.out.println("Operacion Realizada con EXITO!");
     }
+
+//    EJ 9 MY APP:
+
+    public static void createFinalFile(String fileIn, String fileOut, String oddList){
+        try{
+            InputStream myFilePath = new FileInputStream(fileIn);
+            try{
+                byte[]datos = myFilePath.readAllBytes();
+                myFilePath.close();
+
+                PrintStream finalFile = new PrintStream(fileOut);
+                System.out.println("");
+                System.out.println("Generando archivo, por favor espere...");
+                finalFile.write(datos);
+                finalFile.print(oddList);
+                finalFile.close();
+            }catch (IOException e){
+                System.out.println("File Not Found Exception: " + e.getMessage());
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("File Not Found Exception: " + e.getMessage());
+        }
+        System.out.println("Operacion Realizada con Exito!!");
+    }
+
 }
